@@ -4,10 +4,12 @@ title: Zoning San Diego
 
 <div class="welcome">
   <h1>Zoning San Diego</h1>
-  <input type="text" name="zoning" id="address" />
-  <button id="find-zone" >Find My Zone</button>
+  <form>
+    <input type="text" name="zoning" id="address" placeholder="Type your address including house number" />
+    <button id="find-zone" >Find My Zone</button>
+  </form>
   <div class="zone">
-    <p>Your Zone Type is: <span id="zone"></span></p>
+    <h3>Your Zone Type is: <span id="zone"></span></h3>
   </div>
   <p>Data: <a href="http://data.sandiego.gov/dataset/zoning">Open Data Portal</a>
   <p>Zoning Types from Municipal Code: <a href="https://www.sandiego.gov/city-clerk/officialdocs/legisdocs/municode/muni">PDFs</a>

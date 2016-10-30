@@ -35,6 +35,8 @@ end
 # end
 
 # Build-specific configuration
+activate :relative_assets
+set :relative_links, true
 configure :build do
   # Minify CSS on build
   # activate :minify_css

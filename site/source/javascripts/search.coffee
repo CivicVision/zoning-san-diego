@@ -25,12 +25,15 @@ findZoning = (lat, long) ->
     console.log(data)
     if data.rows.length > 0
       document.getElementById('zone').innerHTML = showHumanReadableZone(data.rows[0].zone_name)
+    document.getElementById('find-zone').innerHTML = 'Find my zone'
   )
   .error((errors) ->
+    document.getElementById('find-zone').innerHTML = 'Find my zone'
     console.log("errors:" + errors)
   )
 window.onload= () ->
   document.getElementById('find-zone').addEventListener("click", (event) ->
+    this.innerHTML = 'Searching ...'
     event.preventDefault()
     address = document.getElementById('address').value
     unless address.match(/San Diego/)

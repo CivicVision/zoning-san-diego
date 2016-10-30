@@ -20,6 +20,7 @@ git checkout -b gh-pages
 # Build site.
 cp -r site/* .
 npm install
+bundle install
 bundle exec middleman build
 
 # Delete and move files.

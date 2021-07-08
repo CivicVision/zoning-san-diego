@@ -1,7 +1,0 @@
-node_modules/
-.tmp/
-*.swp
-.bundle
-build
-.sass-cache
-.cache

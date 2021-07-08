@@ -18,16 +18,18 @@
     <div class="welcome">
   <h1>Zoning San Diego</h1>
   <form>
-    <input type="text" name="zoning" id="address" placeholder="Type your address including house number" />
+    <input type="text" name="zoning" id="address" placeholder="1200 Third Ave" />
     <button id="find-zone" >Find My Zone</button>
+    <button id="find-zone-example" >Use example</button>
   </form>
   <div class="zone">
     <h3>Your Zone Type is: <span id="zone"></span></h3>
     <h3>Your Sub Zone Type is: <span id="sub-zone"></span></h3>
     <h3>Your Zone Code is: <span id="zone-code"></span></h3>
   </div>
-  <p>Data: <a href="http://data.sandiego.gov/dataset/zoning">Open Data Portal</a>
-  <p>Zoning Types from Municipal Code: <a href="http://google.sannet.gov/search?site=scs_municode_ch13&partialfields=&requiredfields=PATH%3Amunicode&client=scs_ocd&filter=0&config=muni_ch13.js&layout_type=titlelink&getfields=DOCUMENT_URL.DOC_NUM.TITLE&proxystylesheet=scs_ocd&output=xml_no_dtd&proxyreload=1&sort=date:A:S:d1&num=100">Chapter 13: Zones</a>
+  <p>Data: <a href="https://data.sandiego.gov/datasets/zoning/">Open Data Portal</a>
+  <p>Zoning Types from Municipal Code: <a href="https://www.sandiego.gov/city-clerk/officialdocs/municipal-code/chapter-13">Chapter 13: Zones</a>
+  <p>Currently only supports Residential and Commerical Zone sub types.</p>
 </div><!-- .welcome -->
 
   </body>

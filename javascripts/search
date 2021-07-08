@@ -1,49 +1,108 @@
 (function() {
-  var findLatLng, findZoning, showHumanReadableZone;
+  var findLatLng, findZoning, search, showHumanReadableZone, zones;
+
+  zones = {
+    "RE": {
+      type: "Residential",
+      sub: "Estate"
+    },
+    "RS": {
+      type: "Residential",
+      sub: "Single Unit"
+    },
+    "RX": {
+      type: "Residential",
+      sub: "Small Lot"
+    },
+    "RT": {
+      type: "Residential",
+      sub: "Townhouse"
+    },
+    "RM": {
+      type: "Residential",
+      sub: "Multiple Unit"
+    },
+    "CN": {
+      type: "Commercial",
+      sub: "Neighborhood"
+    },
+    "CR": {
+      type: "Commercial",
+      sub: "Regional"
+    },
+    "CO": {
+      type: "Commercial",
+      sub: "Office"
+    },
+    "CV": {
+      type: "Commercial",
+      sub: "Visitor"
+    },
+    "CP": {
+      type: "Commercial",
+      sub: "Parking"
+    },
+    "CC": {
+      type: "Commercial",
+      sub: "Community"
+    },
+    "IP": {
+      type: "Industrial",
+      sub: ""
+    },
+    "IL": {
+      type: "Industrial",
+      sub: ""
+    },
+    "IH": {
+      type: "Industrial",
+      sub: ""
+    },
+    "IS": {
+      type: "Industrial",
+      sub: ""
+    },
+    "IBT": {
+      type: "Industrial",
+      sub: ""
+    },
+    "OP": {
+      type: "Open Space",
+      sub: ""
+    },
+    "OC": {
+      type: "Open Space",
+      sub: ""
+    },
+    "OR": {
+      type: "Open Space",
+      sub: ""
+    },
+    "OF": {
+      type: "Open Space",
+      sub: ""
+    },
+    "AG": {
+      type: "Agricultural",
+      sub: ""
+    },
+    "AR": {
+      type: "Agricultural",
+      sub: ""
+    }
+  };
 
   showHumanReadableZone = function(zoneCode) {
-    var zone;
-    if (zoneCode.match(/RE|RS|RX|RT|RM/)) {
-      zone = {
-        type: "Residential"
-      };
-      if (zoneCode.match(/RE/)) {
-        zone.sub = "Estate";
-      }
-      if (zoneCode.match(/RS/)) {
-        zone.sub = "Single Unit";
-      }
-      if (zoneCode.match(/RX/)) {
-        zone.sub = "Small Lot";
-      }
-      if (zoneCode.match(/RT/)) {
-        zone.sub = "Townhouse";
-      }
-      if (zoneCode.match(/RM/)) {
-        zone.sub = "Mulitple Unit";
-      }
-      return zone;
-    }
-    if (zoneCode.match(/CN|CR|CO|CV|CP/)) {
-      return "Commercial";
-    }
-    if (zoneCode.match(/IP|IL|IH|IS|IBT/)) {
-      return "Industrial";
-    }
-    if (zoneCode.match(/OP|OC|OR|OF/)) {
-      return "Open Space";
-    }
-    if (zoneCode.match(/AG|AR/)) {
-      return "Agricultural";
-    }
-    return zoneCode;
+    var sub;
+    sub = zoneCode.slice(0, 2);
+    return zones[sub];
   };
 
   findLatLng = function(address) {
-    return fetch("https://search.mapzen.com/v1/search?text=" + address + "&boundary.country=USA&api_key=mapzen-Rxq2xk8").then(function(response) {
+    return fetch("https://api.geocod.io/v1.6/geocode?q=" + address + "&&api_key=e1446acd60dc479614066cd999471e7069cbe49").then(function(response) {
       return response.json();
     }).then(function(data) {
-      return data.features[0].geometry.coordinates;
+      return data.results[0].location;
     });
   };
 
@@ -65,25 +124,36 @@
         document.getElementById('sub-zone').innerHTML = zoneHuman.sub;
         document.getElementById('zone-code').innerHTML = zoneCode;
       }
-      return document.getElementById('find-zone').innerHTML = 'Find my zone';
+      document.getElementById('find-zone').innerHTML = 'Find my zone';
+      return document.getElementById('find-zone-example').innerHTML = 'Use example';
     }).error(function(errors) {
       document.getElementById('find-zone').innerHTML = 'Find my zone';
+      document.getElementById('find-zone-example').innerHTML = 'Use example';
       return alert('Somethign went wrong. Please try again.');
     });
   };
 
+  search = function(address) {
+    if (!address.match(/San Diego/)) {
+      address += ", San Diego";
+    }
+    return findLatLng(address).then(function(coordinates) {
+      return findZoning(coordinates.lat, coordinates.lng);
+    });
+  };
+
   window.onload = function() {
-    return document.getElementById('find-zone').addEventListener("click", function(event) {
+    document.getElementById('find-zone').addEventListener("click", function(event) {
       var address;
       this.innerHTML = 'Searching ...';
       event.preventDefault();
       address = document.getElementById('address').value;
-      if (!address.match(/San Diego/)) {
-        address += ", San Diego";
-      }
-      return findLatLng(address).then(function(coordinates) {
-        return findZoning(coordinates[1], coordinates[0]);
-      });
+      return search(address);
+    }, false);
+    return document.getElementById('find-zone-example').addEventListener("click", function(event) {
+      this.innerHTML = 'Searching ...';
+      event.preventDefault();
+      return search("1200 Third Ave");
     }, false);
   };
 

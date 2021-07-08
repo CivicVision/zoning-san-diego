@@ -23,6 +23,9 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-    })
+    }),
+    new webpack.DefinePlugin({
+      GEOCODE_API_KEY: JSON.stringify(process.env.GEOCODE_API_KEY),
+    }),
   ]
 };

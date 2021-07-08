@@ -18,6 +18,8 @@ jobs:
         run: |
           npm install
           bundle exec middleman build
+        env:
+          GEOCODE_API_KEY: ${{ secrets.GEOCODE_API_KEY }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4

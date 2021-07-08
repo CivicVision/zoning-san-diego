@@ -93,7 +93,7 @@ showHumanReadableZone = (zoneCode) ->
 	return zones[sub]
 
 findLatLng = (address) ->
-  fetch("https://api.geocod.io/v1.6/geocode?q=#{address}&&api_key=e1446acd60dc479614066cd999471e7069cbe49")
+  fetch("https://api.geocod.io/v1.6/geocode?q=#{address}&&api_key=#{GEOCODE_API_KEY}")
   .then( (response) ->
     response.json()
   ).then( (data) ->

@@ -90,7 +90,7 @@ zones = {
 }
 showHumanReadableZone = (zoneCode) ->
 	sub = zoneCode.slice(0,2)
-	return zones[sub]
+	zones[sub] || { type: sub, sub: "" }
 
 findLatLng = (address) ->
   fetch("https://api.geocod.io/v1.6/geocode?q=#{address}&&api_key=e1446acd60dc479614066cd999471e7069cbe49")

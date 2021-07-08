@@ -1,10 +1,7 @@
-name: Build and Deploy
-on:
-  push:
-    branches:
-      - master
+name: Build
+on: [push]
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,9 +15,3 @@ jobs:
         run: |
           npm install
           bundle exec middleman build
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: build

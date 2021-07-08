@@ -99,7 +99,7 @@
   };
 
   findLatLng = function(address) {
-    return fetch("https://api.geocod.io/v1.6/geocode?q=" + address + "&&api_key=e1446acd60dc479614066cd999471e7069cbe49").then(function(response) {
+    return fetch("https://api.geocod.io/v1.6/geocode?q=" + address + "&&api_key=" + GEOCODE_API_KEY).then(function(response) {
       return response.json();
     }).then(function(data) {
       return data.results[0].location;

@@ -22,11 +22,11 @@ showHumanReadableZone = (zoneCode) ->
     return "Agricultural"
   return zoneCode
 findLatLng = (address) ->
-  fetch("https://search.mapzen.com/v1/search?text=#{address}&boundary.country=USA&api_key=mapzen-Rxq2xk8")
+  fetch("https://api.geocod.io/v1.6/geocode?q=#{address}&&api_key=e1446acd60dc479614066cd999471e7069cbe49")
   .then( (response) ->
     response.json()
   ).then( (data) ->
-    data.features[0].geometry.coordinates
+    data.results[0].location
   )
 findZoning = (lat, long) ->
   query = "SELECT * FROM city_zoning_sd WHERE ST_CONTAINS(the_geom,ST_SetSRID(ST_MakePoint({{long}},{{lat}}),4326))"
@@ -45,14 +45,18 @@ findZoning = (lat, long) ->
     document.getElementById('find-zone').innerHTML = 'Find my zone'
     alert('Somethign went wrong. Please try again.')
   )
+
+search = (address) ->
+	unless address.match(/San Diego/)
+		address += ", San Diego"
+	findLatLng(address).then( (coordinates) ->
+		findZoning(coordinates.lat, coordinates.lng)
+	)
+
 window.onload= () ->
   document.getElementById('find-zone').addEventListener("click", (event) ->
     this.innerHTML = 'Searching ...'
     event.preventDefault()
     address = document.getElementById('address').value
-    unless address.match(/San Diego/)
-      address += ", San Diego"
-    findLatLng(address).then( (coordinates) ->
-      findZoning(coordinates[1], coordinates[0])
-    )
+    search(address)
   , false)
